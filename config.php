@@ -14,8 +14,8 @@ define('ENVIRONMENT','SANDBOX');
 //define('ENVIRONMENT','PRODUCTION');
 
 //Enter venmo developer app credentials below
-define('CLIENT_ID','please replace me');
-define('CLIENT_SECRET','please replace me');
+define('CLIENT_ID','PLEASE REPLACE ME');
+define('CLIENT_SECRET','PLEASE REPLACE ME');
 define('SCOPES','access_email access_phone make_payments');
 
 ?>

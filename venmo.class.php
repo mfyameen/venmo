@@ -1,43 +1,8 @@
 <?php
 /*
+ * phpVenmo
+ *
  * Server side integration for Venmo API
- *
- * Provide methods for the full OAuth authentication, payments, and user information
- *
- * Authentication
- *
- *      Please make sure to define client_id, client_secret and scopes before getting started
- *
- *      For full list of scopes, please see Venmo API documentation. By default, this class implements the bare minimum set of scopes to send money from one user to another.
- *      
- *      Usage
- *      1. Call getAuthURL from app and direct user to that URL in app
- *      2. Call exchangeToken and pass query param "code" returned from first request
- *      3. On success, store the entire response so that you have access to the access and refresh tokens
- *      4. Call getUser or Payment request as needed
- *
- *      ToDo
- *      1. Save access token on refresh of token
- *      2. Save refresh token, client_id, & client_secret internally to make class more "friendly"
- *
- * Payments
- * 
- *      sendPaymentCharge - Send a payment or a charge
- *      getRecentPayments - Grab recent payments
- *      getPaymentInformation - Grab a single payment's information
- *      updatePaymentRequest - Accept, Deny, or Cancel a payment request
- *
- * Users 
- *
- *      getCurrentUserInfo - Get the current user's information
- *      getUserInfo - Get a specific user's information
- *      getUserFriends - Get a specific user's friends
- *      
- * Helper Functions
- * 
- *      setAccessToken - Set a specific access token
- *      setEnvironment - Switch between PRODUCTION and SANDBOX environments
- *      setAPIUrl - Set a specific Venmo API URL
  *
  */
 
@@ -215,6 +180,43 @@ class Venmo{
 
         return $this->curlMethod('payments/' . $paymentID,null,"GET");
     }
+
+    /* 
+    * Generate a payment link
+    * @param string type The type of transaction (pay or charge)
+    * @param array recipient(s) The person or people to send the transaction to
+    * @param string amount The amount of money to send or charge
+    * @param string note The note to add to the transaction
+    * @param string sharing Make transaction private, public, or friends only
+    * @param string external Share the transaction externally to facebook
+    */
+    public function generatePaymentLink($type, $recipients, $amount, $note, $audience, $sharing)
+    {
+        $fields = array();
+
+        if(($type != "pay") && ($type != "charge"))
+            throw new Exception("ERROR::generatePaymentLink::Bad transaction type '" . $type . "'");
+        else
+            $fields['txn'] = $type;
+
+        if($amount)
+            $fields['amount'] = $amount;
+
+        if($note)
+            $fields['note'] = $note;
+
+        if($sharing)
+            $fields['share'] = $sharing;
+
+        if($audience)
+            $fields['audience'] = $audience;
+
+        if($recipients)
+            $fields['recipients'] = join(',', $recipients);
+
+        return "https://venmo.com/?" . http_build_query($fields);
+    }
+
 
 
     /* =============================================================================

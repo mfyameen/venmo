@@ -34,6 +34,7 @@ PHP library for interacting with the Venmo API. Provide methods for the full OAu
 * getRecentPayments - Grab recent payments
 * getPaymentInformation - Grab a single payment's information
 * updatePaymentRequest - Accept, Deny, or Cancel a payment request
+* generatePaymentLink - Generate a payment link complaint with https://developer.venmo.com/paymentlinks
 
 ## Users 
 

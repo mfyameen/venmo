@@ -41,13 +41,13 @@ try
     echo "getPaymentInformation Test\r\nResponse: ";
     print_r($v->getPaymentInformation(EXAMPLE_PAYMENTS_PAYMENT_ID));
     echo "-------------------\r\n\r\n";
-    
+
 
 
 } 
 catch (Exception $e) 
 {
-    echo "ERROR:venmo.users.example.php";
+    echo "ERROR:venmo.payments.example.php";
     print_r($e);   
 }
 

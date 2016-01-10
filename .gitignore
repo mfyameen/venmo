@@ -1,1 +1,2 @@
-config.php
+# Ignore configuration files (which could have access tokens, passwords, etc in them
+*.config.php
